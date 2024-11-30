@@ -9,9 +9,9 @@ def load_labels(label_file):
         labels = f.readlines()
     return [label.strip() for label in labels]
  
-model = load_model('D:/signmodel/model_hand.h5')#path of model
+model = load_model('D:/signmodel/model_hand.h5')
 
-labels = load_labels('D:/signmodel/labels.txt') #path of labels
+labels = load_labels('D:/signmodel/labels.txt') 
 
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
@@ -69,21 +69,19 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
                 sequence = []
 
-            # Display the frame with landmarks
+
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
             mp_drawing.draw_landmarks(frame, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
             mp_drawing.draw_landmarks(frame, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
 
-        # Display the last predicted label on the frame
         cv2.putText(frame, last_predicted_label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
-        # Show the camera feed
+
         cv2.imshow('Camera Feed', frame)
 
-        # Press 'q' to exit the camera stream
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-# Release the camera and close all OpenCV windows
 cap.release()
 cv2.destroyAllWindows()
